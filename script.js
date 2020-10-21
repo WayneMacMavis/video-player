@@ -1,3 +1,4 @@
+const player = document.querySelector('.player');
 const video = document.querySelector('video');
 const progressRange = document.querySelector('.progress-range');
 const progressBar = document.querySelector('.progress-bar');
@@ -31,10 +32,7 @@ if (video.paused) {
 // On video end, Show play icon
 video.addEventListener('ended', showPlayIcon);
 
-
-
 // Progress Bar ---------------------------------- //
-
 // Calculate display time format
 function displayTime(time) {
     const minutes = Math.floor(time / 60);
@@ -57,7 +55,6 @@ function setProgress(e) {
     progressBar.style.width = `${newTime * 100}%`;
     video.currentTime = newTime * video.duration;
 }
-
 
 // Volume Controls --------------------------- //
 let lastVolume = 1;
@@ -101,14 +98,10 @@ function toggleMute() {
     }
 }
 
-
-
 // Change Playback Speed -------------------- //
 function changeSpeed() {
     video.playbackRate = speed.value;
 }
-
-
 
 // Fullscreen ------------------------------- //
 function openFullscreen(elem) {
@@ -121,6 +114,7 @@ function openFullscreen(elem) {
     } else if (elem.msRequestFullscreen) { /* IE/Edge */
       elem.msRequestFullscreen();
     }
+    video.classList.add('video-fullscreen');
   }
   
   /* Close fullscreen */
@@ -134,18 +128,15 @@ function openFullscreen(elem) {
     } else if (document.msExitFullscreen) { /* IE/Edge */
       document.msExitFullscreen();
     }
+    video.classList.remove('video-fullscreen');
   }
 
   let fullscreen = false;
 
 //   Toggle Fullscreen
 function toggleFullscreen() {
-    if (!fullscreen) {
-        openFullscreen(player);
-    } else {
-        closeFullscreen();
-    }
-    fullscreen = !fullscreen;
+    !fullscreen ? openFullscreen(player) : closeFullscreen();
+    fullscreen = !fullscreen
 }
 
 // Event Listeners
